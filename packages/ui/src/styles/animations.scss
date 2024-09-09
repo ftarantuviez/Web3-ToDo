@@ -1,0 +1,175 @@
+$initial-scale: 0.95s;
+
+@keyframes FadeInScaleIN {
+  0% {
+    transform: scale($initial-scale);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+$row-base-duration: 1s;
+$row-duration-increment: 0.15s;
+$asset-card-delay: 0.25s;
+$asset-card-base-duration: 1.25s;
+
+._transition {
+  transition: all 0.1s ease-in;
+}
+
+@for $i from 0 through 7 {
+  .row_#{$i}_fade_in {
+    opacity: 0;
+    animation: FadeInScaleIN
+      ($row-base-duration + $i * $row-duration-increment)
+      cubic-bezier(0.87, 0, 0.13, 1)
+      forwards;
+  }
+}
+
+@for $i from 0 through 10 {
+  .asset_card_#{$i}_fade_in_scale_in {
+    opacity: 0;
+    animation: FadeInScaleIN
+      ($asset-card-base-duration + $i * $row-duration-increment)
+      $asset-card-delay
+      cubic-bezier(0.87, 0, 0.13, 1)
+      forwards;
+  }
+}
+
+@keyframes FadeInFromTop {
+  0% {
+    transform: translateY(-2px) scale(0.8);
+    filter: blur(2px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0px) scale(1);
+  }
+}
+$dropdown-item-duration-increment: 0.05s;
+@for $i from 1 through 10 {
+  .dropdown_item_#{$i}_fade_in_scale_in {
+    transform: translateY(-2px) scale(0.8);
+    filter: blur(5px);
+    opacity: 0;
+    animation: FadeInFromTop
+      ($i * $dropdown-item-duration-increment)
+      ease-in
+      forwards;
+  }
+}
+
+$basic-fade-in-scale-duration-increment: 0.2s;
+._0_1_fade_out_scale_out {
+  opacity: 1;
+  transform: scale(1);
+  animation: FadeOutScaleScaleOut 0.1s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._0_25_fade_out_scale_out {
+  opacity: 1;
+  transform: scale(1);
+  animation: FadeOutScaleScaleOut 0.25s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._0_25_fade_out {
+  opacity: 1;
+  transform: scale(1);
+  animation: FadOut 0.25s cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+
+._0_2_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (1 * $basic-fade-in-scale-duration-increment)
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._0_3_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (1 * $basic-fade-in-scale-duration-increment)+0.1
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._0_4_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (1 * $basic-fade-in-scale-duration-increment)+0.2
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._0_5_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (2 * $basic-fade-in-scale-duration-increment)
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._0_75_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (3 * $basic-fade-in-scale-duration-increment)
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._0_8_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (3 * $basic-fade-in-scale-duration-increment)+0.1
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._0_9_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (3 * $basic-fade-in-scale-duration-increment)+0.2
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._1_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (4 * $basic-fade-in-scale-duration-increment)
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._1_1_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (4 * $basic-fade-in-scale-duration-increment)+0.1
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._1_2_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (5 * $basic-fade-in-scale-duration-increment)
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._1_3_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (5 * $basic-fade-in-scale-duration-increment)+0.1
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._1_4_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (5 * $basic-fade-in-scale-duration-increment)+0.2
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._1_5_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (6 * $basic-fade-in-scale-duration-increment)
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._1_75_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (7 * $basic-fade-in-scale-duration-increment)
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
+._2_fade_in_scale_in {
+  opacity: 0;
+  transform: scale($initial-scale);
+  animation: FadeInScaleIN (8 * $basic-fade-in-scale-duration-increment)
+    cubic-bezier(0.87, 0, 0.13, 1) forwards;
+}
