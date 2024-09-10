@@ -6,8 +6,7 @@ import { CheckCircle, CoinsIcon, XCircle } from "lucide-react";
 import { Button } from "@ui/components/Button";
 import { useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "@wagmi/core";
-
-import { wagmiConfig } from "../auth/AuthProvider";
+import { wagmiConfig } from "../../contexts/AuthProvider";
 
 export const MintCard: FunctionComponent<{ completedTodos: number }> = ({
   completedTodos,

@@ -16,7 +16,7 @@ import { ToDoModal } from "./ToDoModal";
 import { Chip } from "@ui/components/Chip";
 import type { ToDo } from "@repo/types/ToDo";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { useToDo } from "./ToDoProvider";
+import { useToDo } from "../../contexts/ToDoProvider";
 import { FadeInScaleAnimation } from "../../../../packages/ui/src/components/FadeInScaleAnimation";
 
 export const ToDoList: React.FunctionComponent = () => {

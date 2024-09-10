@@ -1,8 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { NavBar } from "../ui/NavBar";
-import { ToDoList } from "./ToDoList";
-import { MintCard } from "../web3/MintCard";
+
+import { MintCard } from "../organisms/MintCard";
+
+import { NavBar } from "../molecules/NavBar";
+import { ToDoList } from "../organisms/ToDoList";
 
 export const Home = () => {
   const [tab, setTab] = useState<"nfts" | "todos">("todos");

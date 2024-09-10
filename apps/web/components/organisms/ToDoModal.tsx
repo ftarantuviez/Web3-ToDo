@@ -19,7 +19,7 @@ import { Label } from "@ui/components/Label";
 import { Textarea } from "@ui/components/TextArea";
 import { Chip } from "@ui/components/Chip";
 import { ToDo } from "@repo/types/ToDo";
-import { PartialToDo, useToDo } from "./ToDoProvider";
+import { PartialToDo, useToDo } from "../../contexts/ToDoProvider";
 
 export const ToDoModal: React.FC<
   Readonly<{

@@ -15,7 +15,7 @@ function ModelStarShip3D() {
   return <primitive object={gltf.scene} scale={[0.5, 0.5, 0.5]} />;
 }
 
-export const LoginPage = () => {
+export const Login = () => {
   const { openConnectModal } = useConnectModal();
   const router = useRouter();
   const session = useSession();

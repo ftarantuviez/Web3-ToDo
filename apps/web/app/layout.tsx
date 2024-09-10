@@ -1,8 +1,9 @@
 import "@ui/styles/globals.css";
 import type { Metadata } from "next";
-import { AuthProvider } from "../components/auth/AuthProvider";
+
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@ui/components/Toaster";
+import { AuthProvider } from "../contexts/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Web3 To-Do",

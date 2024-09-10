@@ -1,7 +1,25 @@
+/**
+ * @fileoverview This file contains the API route handlers for the todos endpoint.
+ * It serves as a middleware between the frontend and the backend API,
+ * handling CRUD operations for todo items.
+ *
+ * The route handlers interact with an external API using axios,
+ * transforming requests from the Next.js API routes to the format
+ * expected by the backend, and vice versa for responses.
+ *
+ * Operations include:
+ * - GET: Fetching todos
+ * - POST: Creating a new todo
+ * - PUT: Updating an existing todo
+ * - DELETE: Removing a todo (implementation not shown in this snippet)
+ *
+ * Error handling is implemented to catch and report any issues
+ * that occur during these operations.
+ */
+
 import { NextResponse } from "next/server";
 import axios from "../../../config/axios";
 import { ToDo } from "@repo/types/ToDo";
-import { PartialToDo } from "../../../components/todo/ToDoProvider";
 
 export async function GET() {
   try {
@@ -21,7 +39,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const newTodo: PartialToDo = await request.json();
+    const newTodo = await request.json();
 
     const { data } = await axios.post<ToDo>("/todos", newTodo);
 

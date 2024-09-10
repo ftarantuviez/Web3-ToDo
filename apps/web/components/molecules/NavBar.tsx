@@ -1,10 +1,11 @@
 import React from "react";
-import { ThemeToggle } from "./ThemeToggle";
+
 import Image from "next/image";
 import { FadeInScaleAnimation } from "@ui/components/FadeInScaleAnimation";
 import { Separator } from "@ui/components/Separator";
-import { ConnectWalletButton } from "../web3/ConnectWalletButton";
+import { ConnectWalletButton } from "./ConnectWalletButton";
 import { Tabs, TabsList, TabsTrigger } from "@ui/components/Tabs";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const NavBar: React.FunctionComponent<
   Readonly<{

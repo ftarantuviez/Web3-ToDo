@@ -1,8 +1,9 @@
 import type { ToDo } from "@repo/types/ToDo";
 
 import axios from "../config/axios";
-import { ToDoProvider } from "../components/todo/ToDoProvider";
-import { Home } from "../components/todo/Home";
+
+import { Home } from "../components/pages/Home";
+import { ToDoProvider } from "../contexts/ToDoProvider";
 
 export default async function HomePage() {
   // We get Server-Side Props to fetch the data from the API.

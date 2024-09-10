@@ -1,8 +1,6 @@
-"use client";
-
 import React from "react";
-import { LoginPage } from "../../components/web3/LoginPage";
+import { Login } from "../../components/pages/Login";
 
-export default function Login() {
-  return <LoginPage />;
+export default function LoginPage() {
+  return <Login />;
 }
