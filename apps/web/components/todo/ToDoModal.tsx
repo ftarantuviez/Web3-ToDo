@@ -18,8 +18,8 @@ import {
 import { Label } from "@ui/components/Label";
 import { Textarea } from "@ui/components/TextArea";
 import { Chip } from "@ui/components/Chip";
-import axios from "../../config/axios";
 import { ToDo } from "@repo/types/ToDo";
+import { PartialToDo, useToDo } from "./ToDoProvider";
 
 export const ToDoModal: React.FC<
   Readonly<{
@@ -28,7 +28,8 @@ export const ToDoModal: React.FC<
     toDo?: ToDo;
   }>
 > = ({ isOpen, onClose }) => {
-  const [form, setForm] = useState<Partial<ToDo>>({
+  const { createToDo } = useToDo();
+  const [form, setForm] = useState<PartialToDo>({
     title: "",
     description: "",
     priority: "low",
@@ -36,16 +37,15 @@ export const ToDoModal: React.FC<
   });
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
+    (e: React.FormEvent) => {
       e.preventDefault();
-      const resp = await axios.post("/todos", form);
-      console.log(resp);
+      createToDo(form);
       onClose();
     },
     [form, onClose]
   );
 
-  const handleInputChange = (field: keyof ToDo, value: string) => {
+  const handleInputChange = (field: keyof PartialToDo, value: string) => {
     setForm((prevForm) => ({ ...prevForm, [field]: value }));
   };
 
@@ -130,7 +130,7 @@ export const ToDoModal: React.FC<
               <Input
                 id="dueDate"
                 type="date"
-                value={form.dueDate?.toString()}
+                value={form.dueDate.toString()}
                 onChange={(e) => handleInputChange("dueDate", e.target.value)}
                 className="col-span-3 border-2 border-input focus:border-primary"
               />

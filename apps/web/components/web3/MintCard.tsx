@@ -43,7 +43,7 @@ export const MintCard: FunctionComponent<{ completedTodos: number }> = ({
   return (
     <div
       className={cn(
-        "relative w-full h-full bg-gradient-to-br rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-300",
+        "relative w-full bg-gradient-to-br rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition-all duration-300 h-[40vh]",
         canMint
           ? "from-purple-400 to-pink-500 animate-pulse"
           : "from-gray-400 to-gray-600"

@@ -4,11 +4,17 @@ import Image from "next/image";
 import { FadeInScaleAnimation } from "@ui/components/FadeInScaleAnimation";
 import { Separator } from "@ui/components/Separator";
 import { ConnectWalletButton } from "../web3/ConnectWalletButton";
+import { Tabs, TabsList, TabsTrigger } from "@ui/components/Tabs";
 
-export const NavBar: React.FunctionComponent = () => {
+export const NavBar: React.FunctionComponent<
+  Readonly<{
+    selectedTab: "todos" | "nfts";
+    onTabChange: (tab: "todos" | "nfts") => void;
+  }>
+> = ({ selectedTab, onTabChange }) => {
   return (
     <div className="w-screen flex items-center justify-between p-7 border-b">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-5">
         <Image
           src="/mode-mobile-logo.png"
           alt="Logo"
@@ -24,8 +30,19 @@ export const NavBar: React.FunctionComponent = () => {
             Organize your tasks with blockchain
           </p>
         </div>
+        <Separator orientation="vertical" className="h-10 mx-4" />
+        <Tabs
+          defaultValue="todos"
+          value={selectedTab}
+          onValueChange={(value) => onTabChange(value as "todos" | "nfts")}
+        >
+          <TabsList>
+            <TabsTrigger value="todos">TODOS</TabsTrigger>
+            <TabsTrigger value="nfts">NFTS</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-4">
         <FadeInScaleAnimation duration="1">
           <ConnectWalletButton />
         </FadeInScaleAnimation>

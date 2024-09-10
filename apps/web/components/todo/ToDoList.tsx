@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { ToDoCard } from "./ToDoCard";
 
 import { Button } from "@ui/components/Button";
@@ -16,21 +16,23 @@ import { ToDoModal } from "./ToDoModal";
 import { Chip } from "@ui/components/Chip";
 import type { ToDo } from "@repo/types/ToDo";
 import { PlusIcon } from "@radix-ui/react-icons";
+import { useToDo } from "./ToDoProvider";
+import { FadeInScaleAnimation } from "../../../../packages/ui/src/components/FadeInScaleAnimation";
 
-export const ToDoList: React.FunctionComponent<
-  Readonly<{ data: ReadonlyArray<ToDo> }>
-> = ({ data }) => {
+export const ToDoList: React.FunctionComponent = () => {
+  const { todos, markAsCompleted, deleteToDo } = useToDo();
+
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [filter, setFilter] = useState<"all" | ToDo["priority"]>("all");
 
   // We filter the data based on the selected filter.
   const itemsToDisplay = useMemo(() => {
     if (filter === "all") {
-      return data;
+      return todos;
     }
 
-    return data.filter((item) => item.priority === filter);
-  }, [data, filter]);
+    return todos.filter((item) => item.priority === filter);
+  }, [todos, filter]);
 
   return (
     <div>
@@ -61,17 +63,28 @@ export const ToDoList: React.FunctionComponent<
       <Separator className="my-5" />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-4">
-        {itemsToDisplay.map((todo) => (
-          <ToDoCard
-            title={todo.title}
-            description={todo.description}
-            dueDate={todo.dueDate}
-            severity={todo.priority}
-            onComplete={() => console.log("Completed Buy groceries")}
-            onEdit={() => console.log("Edit Buy groceries")}
-            key={todo.id}
-          />
-        ))}
+        {itemsToDisplay.length === 0 ? (
+          <div className="col-span-full text-center py-8">
+            <FadeInScaleAnimation duration="0.75">
+              <p className="text-gray-500 text-lg">No tasks to display.</p>
+              <p className="text-gray-400">Add a new task to get started!</p>
+            </FadeInScaleAnimation>
+          </div>
+        ) : (
+          itemsToDisplay.map((todo) => (
+            <ToDoCard
+              title={todo.title}
+              description={todo.description}
+              dueDate={todo.dueDate}
+              severity={todo.priority}
+              onComplete={() => markAsCompleted(todo.id)}
+              onDelete={() => deleteToDo(todo.id)}
+              onEdit={() => console.log("Edit Buy groceries")}
+              key={todo.id}
+              completed={todo.completed}
+            />
+          ))
+        )}
       </div>
       <Button
         onClick={() => setIsOpen(true)}

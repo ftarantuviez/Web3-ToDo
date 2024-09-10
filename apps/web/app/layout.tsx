@@ -2,8 +2,7 @@ import "@ui/styles/globals.css";
 import type { Metadata } from "next";
 import { AuthProvider } from "../components/auth/AuthProvider";
 import { ThemeProvider } from "next-themes";
-import { getSession } from "next-auth/react";
-import { getServerSession } from "next-auth";
+import { Toaster } from "@ui/components/Toaster";
 
 export const metadata: Metadata = {
   title: "Web3 To-Do",
@@ -25,6 +24,7 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>{children}</AuthProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
