@@ -1,0 +1,11 @@
+{
+  "name": "@repo/common",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "eslint . --max-warnings 0"
+  },
+  "private": true,
+  "dependencies": {
+    "viem": "^2.21.3"
+  }
+}

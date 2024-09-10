@@ -15,6 +15,7 @@ import {
   RainbowKitSiweNextAuthProvider,
   GetSiweMessageOptions,
 } from "@rainbow-me/rainbowkit-siwe-next-auth";
+import { Session } from "next-auth";
 
 export const wagmiConfig: Config = getDefaultConfig({
   appName: "ModeMobile - ToDo Rewards",
@@ -45,15 +46,18 @@ const getSiweMessageOptions: GetSiweMessageOptions = () => ({
  * - `RainbowKitSiweNextAuthProvider` from `rainbowkit-siwe-next-auth` for authentication
  * - `SessionProvider` from `next-auth/react` for session management
  */
-export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
+export const AuthProvider: FC<PropsWithChildren & { session?: Session }> = ({
+  children,
+  session,
+}) => {
   return (
-    <SessionProvider>
+    <SessionProvider session={session}>
       <WagmiProvider config={wagmiConfig}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitSiweNextAuthProvider
             getSiweMessageOptions={getSiweMessageOptions}
           >
-            <RainbowKitProvider theme={darkTheme()}>
+            <RainbowKitProvider theme={darkTheme()} showRecentTransactions>
               {children}
             </RainbowKitProvider>
           </RainbowKitSiweNextAuthProvider>

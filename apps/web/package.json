@@ -14,6 +14,8 @@
     "@rainbow-me/rainbowkit-siwe-next-auth": "^0.4.1",
     "@react-three/drei": "^9.112.0",
     "@react-three/fiber": "^8.17.7",
+    "@repo/common": "workspace:*",
+    "@repo/types": "workspace:*",
     "@tanstack/react-query": "^5.55.0",
     "@wagmi/core": "^2.13.4",
     "axios": "^1.7.7",
@@ -25,8 +27,9 @@
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "siwe": "^2.3.2",
     "ui": "workspace:*",
-    "@repo/types": "workspace:*",
+    "viem": "^2.21.3",
     "wagmi": "^2.12.8"
   },
   "devDependencies": {

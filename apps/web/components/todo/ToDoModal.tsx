@@ -18,26 +18,36 @@ import {
 import { Label } from "@ui/components/Label";
 import { Textarea } from "@ui/components/TextArea";
 import { Chip } from "@ui/components/Chip";
+import axios from "../../config/axios";
+import { ToDo } from "@repo/types/ToDo";
 
 export const ToDoModal: React.FC<
   Readonly<{
     isOpen: boolean;
     onClose: () => void;
+    toDo?: ToDo;
   }>
 > = ({ isOpen, onClose }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [severity, setSeverity] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [form, setForm] = useState<Partial<ToDo>>({
+    title: "",
+    description: "",
+    priority: "low",
+    dueDate: new Date(),
+  });
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
-      console.log({ name, description, severity, dueDate });
+      const resp = await axios.post("/todos", form);
+      console.log(resp);
       onClose();
     },
-    [name, description, severity, dueDate, onClose]
+    [form, onClose]
   );
+
+  const handleInputChange = (field: keyof ToDo, value: string) => {
+    setForm((prevForm) => ({ ...prevForm, [field]: value }));
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -58,8 +68,8 @@ export const ToDoModal: React.FC<
               </Label>
               <Input
                 id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={form.title}
+                onChange={(e) => handleInputChange("title", e.target.value)}
                 className="col-span-3 border-2 border-input focus:border-primary"
                 placeholder="Enter todo name"
               />
@@ -73,22 +83,29 @@ export const ToDoModal: React.FC<
               </Label>
               <Textarea
                 id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                value={form.description}
+                onChange={(e) =>
+                  handleInputChange("description", e.target.value)
+                }
                 className="col-span-3 border-2 border-input focus:border-primary min-h-[100px]"
                 placeholder="Enter todo description"
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label
-                htmlFor="severity"
+                htmlFor="priority"
                 className="text-right font-semibold text-secondary-foreground"
               >
-                Severity
+                Priority
               </Label>
-              <Select onValueChange={setSeverity} value={severity}>
+              <Select
+                onValueChange={(value) =>
+                  handleInputChange("priority", value as ToDo["priority"])
+                }
+                value={form.priority}
+              >
                 <SelectTrigger className="col-span-3 border-2 border-input focus:border-primary">
-                  <SelectValue placeholder="Select severity" />
+                  <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="low">
@@ -113,8 +130,8 @@ export const ToDoModal: React.FC<
               <Input
                 id="dueDate"
                 type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
+                value={form.dueDate?.toString()}
+                onChange={(e) => handleInputChange("dueDate", e.target.value)}
                 className="col-span-3 border-2 border-input focus:border-primary"
               />
             </div>
@@ -122,7 +139,12 @@ export const ToDoModal: React.FC<
           <DialogFooter>
             <Button
               type="submit"
-              disabled={!name || !description || !severity || !dueDate}
+              disabled={
+                !form.title ||
+                !form.description ||
+                !form.priority ||
+                !form.dueDate
+              }
               className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
             >
               Create ToDo
