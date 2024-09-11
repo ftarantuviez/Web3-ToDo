@@ -145,7 +145,7 @@ To set up the project locally, follow these steps:
 3. Copy the environment variables:
 
    ```
-   cp .env.example .env.local
+   cp ./apps/web/.env.example ./apps/web/.env.local
    ```
 
 4. Start the development servers:
