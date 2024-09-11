@@ -37,7 +37,7 @@ export const PendingTransactionModal: FunctionComponent<
                 Transaction Hash: {Address.truncate(transactionHash)}
               </p>
               <a
-                href={`https://amoy.polygonscan.com/${transactionHash}`}
+                href={`https://amoy.polygonscan.com/tx/${transactionHash}`}
                 target="_blank"
                 rel="noreferrer"
               >

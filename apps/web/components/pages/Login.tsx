@@ -11,7 +11,6 @@ import { useSession } from "next-auth/react";
 // Render the 3D model of the starship
 function ModelStarShip3D() {
   const gltf = useGLTF("/starship/scene.gltf");
-  console.log(gltf);
   return <primitive object={gltf.scene} scale={[0.5, 0.5, 0.5]} />;
 }
 

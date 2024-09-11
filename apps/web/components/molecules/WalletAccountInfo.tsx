@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@ui/components/Button";
-import { LogOutIcon, Wallet2Icon } from "lucide-react";
+import { LogOutIcon } from "lucide-react";
 import React, { useMemo } from "react";
 import { useAccount, useDisconnect, useSwitchChain } from "wagmi";
 import { ChainId } from "@repo/common/src/ChainId";
@@ -10,6 +10,7 @@ import { Address } from "@repo/common/src/Address";
 import { useRouter } from "next/navigation";
 import { getContractAddress } from "../../config/getContractAddress";
 import { signOut } from "next-auth/react";
+import { DotLoader } from "react-spinners";
 
 type WalletAccountInfoState = Readonly<
   "connected" | "disconnected" | "wrong-network" | "loading"
@@ -65,19 +66,19 @@ export const WalletAccountInfo: React.FunctionComponent = () => {
   switch (walletAccountInfoState) {
     case "connected":
       return (
-        <div className="flex items-center space-x-4 bg-gray-950 border p-3 rounded-lg shadow-lg">
+        <div className="flex items-center space-x-4 bg-background border border-border p-3 rounded-lg shadow-lg">
           <div className="flex flex-col items-start">
-            <span className="text-sm font-bold text-white">
+            <span className="text-sm font-bold">
               {Address.truncate(Address.ofStringOrThrow(address!))}
             </span>
-            <span className="text-xs text-gray-200">
+            <span className="text-xs text-muted-foreground">
               {token?.balanceFormatted} {token?.symbol}
             </span>
           </div>
           <Button
             variant="secondary"
             size="sm"
-            className="bg-white text-purple-600 hover:bg-gray-100 transition-colors duration-200"
+            className="text-purple-600 hover:bg-gray-100 transition-colors duration-200"
           >
             {chain?.name ?? "Unknown"}
           </Button>
@@ -108,11 +109,6 @@ export const WalletAccountInfo: React.FunctionComponent = () => {
     case "disconnected":
     case "loading":
     default:
-      return (
-        <Button>
-          <Wallet2Icon className="mr-2 h-4 w-4" />
-          Connect Wallet
-        </Button>
-      );
+      return <DotLoader color="#4B5563" size={20} />;
   }
 };

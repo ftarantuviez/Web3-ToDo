@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -27,8 +27,8 @@ export const ToDoModal: React.FC<
     onClose: () => void;
     toDo?: ToDo;
   }>
-> = ({ isOpen, onClose }) => {
-  const { createToDo } = useToDo();
+> = ({ isOpen, onClose, toDo }) => {
+  const { createToDo, updateToDo } = useToDo();
   const [form, setForm] = useState<PartialToDo>({
     title: "",
     description: "",
@@ -36,10 +36,32 @@ export const ToDoModal: React.FC<
     dueDate: new Date(),
   });
 
+  useEffect(() => {
+    if (toDo) {
+      setForm({
+        title: toDo.title,
+        description: toDo.description,
+        priority: toDo.priority,
+        dueDate: toDo.dueDate,
+      });
+    }
+  }, [toDo]);
+
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      createToDo(form);
+      // If toDo is defined, we update the existing todo item.
+      if (toDo) {
+        updateToDo(toDo.id, form);
+      } else {
+        createToDo(form);
+      }
+      setForm({
+        title: "",
+        description: "",
+        priority: "low",
+        dueDate: new Date(),
+      });
       onClose();
     },
     [form, onClose]

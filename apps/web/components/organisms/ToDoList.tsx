@@ -21,6 +21,7 @@ import { FadeInScaleAnimation } from "../../../../packages/ui/src/components/Fad
 
 export const ToDoList: React.FunctionComponent = () => {
   const { todos, markAsCompleted, deleteToDo } = useToDo();
+  const [editToDo, setEditToDo] = useState<ToDo | undefined>(undefined);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [filter, setFilter] = useState<"all" | ToDo["priority"]>("all");
@@ -39,14 +40,16 @@ export const ToDoList: React.FunctionComponent = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3 mb-4">
           <h1 className="text-4xl font-bold ">To-Do List</h1>
-          <Button
-            onClick={() => setIsOpen(true)}
-            className="gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:rotate-1 animate-pulse"
-            size="lg"
-          >
-            <PlusIcon className="w-6 h-6" />
-            <span className="font-bold">New Task</span>
-          </Button>
+          {todos.length > 0 && (
+            <Button
+              onClick={() => setIsOpen(true)}
+              className="gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:rotate-1 animate-pulse dark:from-purple-700 dark:to-pink-700 dark:hover:from-purple-800 dark:hover:to-pink-800 ml-4"
+              size="lg"
+            >
+              <PlusIcon className="w-6 h-6" />
+              <span className="font-bold">New Task</span>
+            </Button>
+          )}
         </div>
         <Select
           onValueChange={(value) =>
@@ -76,8 +79,28 @@ export const ToDoList: React.FunctionComponent = () => {
         {itemsToDisplay.length === 0 ? (
           <div className="col-span-full text-center py-8">
             <FadeInScaleAnimation duration="0.75">
-              <p className="text-gray-500 text-lg">No tasks to display.</p>
-              <p className="text-gray-400">Add a new task to get started!</p>
+              <div className="space-y-4">
+                <p className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 dark:from-purple-300 dark:to-pink-500">
+                  Your task list is empty!
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 text-lg">
+                  Time to add some exciting tasks and boost your productivity.
+                </p>
+                <div className="flex items-center justify-center">
+                  <span className="animate-bounce text-3xl mr-2">👇</span>
+                  <p className="text-gray-500 dark:text-gray-400 italic">
+                    Click the "New Task" button to get started!
+                  </p>
+                </div>
+                <Button
+                  onClick={() => setIsOpen(true)}
+                  className="gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:rotate-1 animate-pulse dark:from-purple-700 dark:to-pink-700 dark:hover:from-purple-800 dark:hover:to-pink-800 ml-4"
+                  size="lg"
+                >
+                  <PlusIcon className="w-6 h-6" />
+                  <span className="font-bold">New Task</span>
+                </Button>
+              </div>
             </FadeInScaleAnimation>
           </div>
         ) : (
@@ -89,14 +112,21 @@ export const ToDoList: React.FunctionComponent = () => {
               severity={todo.priority}
               onComplete={() => markAsCompleted(todo.id)}
               onDelete={() => deleteToDo(todo.id)}
-              onEdit={() => console.log("Edit Buy groceries")}
+              onEdit={() => {
+                setEditToDo(todo);
+                setIsOpen(true);
+              }}
               key={todo.id}
               completed={todo.completed}
             />
           ))
         )}
       </div>
-      <ToDoModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <ToDoModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        toDo={editToDo}
+      />
     </div>
   );
 };

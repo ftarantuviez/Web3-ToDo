@@ -18,7 +18,7 @@ type BurnTx = Readonly<
   BaseTx &
     Readonly<{
       methodName: "burn";
-      args: Readonly<{ tokenId: number }>;
+      args: Readonly<{ tokenId: bigint }>;
     }>
 >;
 

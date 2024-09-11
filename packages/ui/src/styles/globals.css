@@ -84,13 +84,12 @@
   }
 
   body {
-    @apply text-foreground;
-    background: linear-gradient(
-        to bottom,
-        transparent,
-        rgb(var(--background-end-rgb))
-      )
-      rgb(var(--background-start-rgb));
+    @apply text-foreground bg-background;
+    background-image: linear-gradient(
+      to bottom,
+      transparent,
+      hsl(var(--background) / 0.9)
+    );
   }
 }
 
