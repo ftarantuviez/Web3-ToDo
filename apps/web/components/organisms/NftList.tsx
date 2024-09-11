@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useUserNfts } from "../../hooks/useUserNfts";
-import { Address } from "@repo/common/src/Address";
 import { Button } from "@ui/components/Button";
 import {
   Card,
@@ -11,14 +10,44 @@ import {
 } from "@ui/components/Card";
 import { Separator } from "../../../../packages/ui/src/components/Separator";
 import { FadeInScaleAnimation } from "../../../../packages/ui/src/components/FadeInScaleAnimation";
+import { getContractAddress } from "../../config/getContractAddress";
+import { ChainId } from "@repo/common/src/ChainId";
+import { useWriteERC721Contract } from "../../hooks/useWriteERC721Contract";
+import { toast } from "../../../../packages/ui/src/components/Toaster";
+import { waitForTransactionReceipt } from "@wagmi/core";
+import { wagmiConfig } from "../../contexts/AuthProvider";
 
 export const NftList: React.FC = () => {
+  const { writeERC721Contract } = useWriteERC721Contract();
   const {
     data: userNfts,
     isLoading,
     isError,
-  } = useUserNfts(
-    Address.ofStringOrThrow("0x8E1096fd5C8Ca1EFdC1BC2F64Ae439E0888b1A46")
+  } = useUserNfts(getContractAddress(ChainId.POLYGON_AMOY).nft);
+
+  const handleBurn = useCallback(
+    async (tokenId: number) => {
+      try {
+        const hash = await writeERC721Contract({
+          address: getContractAddress(ChainId.POLYGON_AMOY).nft,
+          methodName: "burn",
+          args: { tokenId },
+        });
+
+        if (hash) {
+          // We wait for the receipt of the transaction to check if it was successful.
+          const receipt = await waitForTransactionReceipt(wagmiConfig, {
+            hash,
+          });
+          if (receipt.status === "success") {
+            toast.success("NFT burnt successfully");
+          } else toast.error("NFT burn reverted");
+        }
+      } catch (error) {
+        toast.error("There was an error burning the NFT");
+      }
+    },
+    [writeERC721Contract]
   );
 
   if (isLoading) return <div>Loading NFTs...</div>;
@@ -47,7 +76,11 @@ export const NftList: React.FC = () => {
                   <p>Token ID: {tokenId}</p>
                 </CardContent>
                 <CardFooter>
-                  <Button variant="destructive" className="w-full">
+                  <Button
+                    variant="destructive"
+                    className="w-full"
+                    onClick={() => handleBurn(+tokenId)}
+                  >
                     Burn NFT
                   </Button>
                 </CardFooter>

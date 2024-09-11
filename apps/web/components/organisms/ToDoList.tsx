@@ -37,7 +37,17 @@ export const ToDoList: React.FunctionComponent = () => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h1 className="text-4xl font-bold mb-4">To-Do List</h1>
+        <div className="flex items-center gap-3 mb-4">
+          <h1 className="text-4xl font-bold ">To-Do List</h1>
+          <Button
+            onClick={() => setIsOpen(true)}
+            className="gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:rotate-1 animate-pulse"
+            size="lg"
+          >
+            <PlusIcon className="w-6 h-6" />
+            <span className="font-bold">New Task</span>
+          </Button>
+        </div>
         <Select
           onValueChange={(value) =>
             setFilter(value as "all" | ToDo["priority"])
@@ -86,14 +96,6 @@ export const ToDoList: React.FunctionComponent = () => {
           ))
         )}
       </div>
-      <Button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-8 right-8 gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:rotate-1 animate-pulse"
-        size="lg"
-      >
-        <PlusIcon className="w-6 h-6" />
-        <span className="font-bold">New Task</span>
-      </Button>
       <ToDoModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </div>
   );

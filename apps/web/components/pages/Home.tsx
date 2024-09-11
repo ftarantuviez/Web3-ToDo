@@ -11,7 +11,7 @@ export const Home = () => {
   const [tab, setTab] = useState<"nfts" | "todos">("todos");
 
   return (
-    <>
+    <div className="h-screen w-screen overflow-hidden">
       <NavBar selectedTab={tab} onTabChange={setTab} />
       <div className="h-screen w-screen px-20 py-12">
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-8">
@@ -19,10 +19,10 @@ export const Home = () => {
             {tab === "todos" ? <ToDoList /> : <NftList />}
           </div>
           <div className="md:col-span-1">
-            <MintCard completedTodos={1} />
+            <MintCard />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

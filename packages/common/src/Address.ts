@@ -36,7 +36,7 @@ export const Address = {
    * // "0x1234...5678"
    * ````
    */
-  truncate: (address: Address | undefined, buffer = 6) => {
+  truncate: (address: Address | `0x${string}` | undefined, buffer = 6) => {
     if (!address) return "";
     if (address.length <= buffer * 2) {
       return address;
