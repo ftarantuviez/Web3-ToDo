@@ -7,6 +7,7 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { BeatLoader } from "react-spinners";
 
 // Render the 3D model of the starship
 function ModelStarShip3D() {
@@ -102,13 +103,18 @@ export const Login = () => {
             duration: 0.7,
           }}
           onClick={openConnectModal}
+          disabled={session.status === "authenticated"}
         >
           <motion.span
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.5 }}
             whileHover={{ scale: 1.1 }}
+            className="flex items-center gap-4"
           >
+            {session.status === "authenticated" && (
+              <BeatLoader size={8} color="#fff" />
+            )}
             Connect Wallet to Start
           </motion.span>
           <motion.div
